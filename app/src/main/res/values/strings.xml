@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Data Between Activities</string>
+    <string-array name="spnTitleItems">
+        <item>Select Title</item>
+        <item>Mr</item>
+        <item>Mrs</item>
+        <item>Miss</item>
+        <item>Neutral</item>
+        <item>Prefer not to say</item>
+    </string-array>
+</resources>
