@@ -1,5 +1,6 @@
 package com.mfundoza.sendingdatabetweenactivities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
     String firstName;
     String lastName;
     Date dateOfBirth;
+    Double bmi;
     String email;
     String password;
     boolean premiumService;
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
             @Override
             public void onClick(View view) {
                 submitForm();
+            }
+        });
+
+        binding.btnCalculateBMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startBMIActivity();
             }
         });
     }
@@ -118,5 +127,27 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
         startActivity(openProfileActivityIntent);
 
         Snackbar.make(binding.getRoot(), "Form Submitted!", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void startBMIActivity() {
+        Intent intent = new Intent(this, BMIActivity.class);
+
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+               bmi = data.getDoubleExtra("bmi", 0);
+               binding.tilBMI.getEditText().setText(bmi.toString());
+            }
+
+            if (resultCode == RESULT_CANCELED) {
+                Snackbar.make(binding.getRoot(), "Calculation canceled", Snackbar.LENGTH_SHORT).show();
+            }
+        }
     }
 }
